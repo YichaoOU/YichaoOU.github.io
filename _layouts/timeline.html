@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+		<title>{{ page.title }}</title>
+		
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap1.css">
+		<link rel="stylesheet" type="text/css" href="/css/liyc.css">
+		<link rel="stylesheet" href="/css/animate.css">
+		<!-- <link rel="stylesheet" href="/css/bootstrap-theme.css"> -->
+		<link href="/css/docs.css" rel="stylesheet">
+		<link href="/css/stylish.css" rel="stylesheet">
+		<link href="/css/monokai.css" rel="stylesheet">
+
+<style>
+
+.navigation_bar{
+    height: 50px;
+}
+
+.navbar-static-top{
+    height: 50px;
+}
+
+body{   
+    background-color: #e7ebf2; font-family: arial; font-size: 12px;
+}
+header{
+	margin:0 auto; width:780px;height:200px;border:1px solid #c3ccdf; border-bottom:3px solid #c3ccdf; border-radius:2px; background-color:#FFF; padding:10px;
+}
+time,.time{
+    font-size: 10px; color:gray; border-bottom: 1px solid #E7EBF2; min-width:350px; height:20px; padding-bottom: 5px;
+}
+#timeline{
+    width:800px; list-style-type: none; background: url(./timeline.png) top center repeat-y; margin: 0 auto; padding:20px; margin-bottom:10px;
+}
+
+#timeline li{
+    width:375px; -moz-border-radius:2px; border-radius:2px; webkit-border-radius:2px; border:1px solid #c3ccdf; padding:5px;background-color:#FFF;
+}
+
+#timeline li:nth-of-type(odd){
+    clear: both;float:right; 
+}
+
+#timeline li:nth-of-type(odd), #timeline li:nth-of-type(even){
+    margin:-10px 0 20px 0;
+}
+#timeline li:nth-of-type(even) .corner{
+	position:absolute; display:block; margin-left:380px;width:20px;	height:15px;background:url(./right.png); 
+}
+#timeline li:nth-of-type(odd) .corner{
+	position:absolute;display:block;margin-left:-25px;width:20px;height:15px;background:url(./left.png); 
+}
+
+
+
+</style>
+
+	</head>
+
+
+	<body data-spy="scroll" data-target="#liyc_bar" data-offset="20">
+
+		<!-- This is the navigation bar, please make it simple and clear -->
+		<div class="navigation_bar container">
+
+			{%include nav_bar.html %}
+
+
+
+		</div> 
+
+
+
+
+		<ol id="timeline">
+
+
+
+			{% assign cat = page.url | split:'/' | last %}
+			{% for post in site.categories.[cat] %}
+			
+				  <li>
+				    <div class="time">{{ post.date | date_to_string | replace: '<li>', '' | replace: '</li>', ''}}</div>
+				    <span class="corner"></span>
+				    <p style="box-sizing:content-box;-webkit-box-sizing:content-box">{{post.content | replace: '<ol>', '' | replace: '</ol>', ''| replace: '<li>', '' | replace: '</li>', ''}}</p>
+				  </li>
+				  
+
+			{% endfor %} 
+			
+
+
+ 
+		</ol>  
+
+
+
+		<!-- This is the footer; Put your contact and license here -->
+		<div class="footer">
+
+			{%include footer.html %}
+
+		</div>
+
+		<script type="text/javascript" src="/js/jquery2.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+		<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+		
+		<script type="text/javascript" src="/js/ResizeSensor.js"></script>
+		<script type="text/javascript" src="/js/ElementQueries.js"></script>
+
+
+		<script type="text/javascript" src="/js/jspdf.js"></script>
+		<script type="text/javascript" src="/js/liyc.js"></script>
+	</body>
+</html>
