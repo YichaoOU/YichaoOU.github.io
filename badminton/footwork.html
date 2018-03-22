@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+		<title>LinDan_Style</title>
+		
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+		<link rel="stylesheet" href="/css/bootstrap-theme.css">
+
+		
+	</head>
+
+
+	<body>
+
+
+
+
+
+
+
+		<div class="container-fluid container" >
+			<div class="row" style="margin-top:30px">
+
+				<!-- This is the main article, we will use markdown to post content -->
+				<div class="margin_left col-3 col-sm-3 col-md-3"></div>
+				<div class="article_main_content col-6 col-sm-6 col-md-6" >
+					<!-- display message return of shuttlecock -->
+					<div class="row return_shuttlecock" width="300">
+						<h1>回击</h1>
+
+						<h1 class="type_of_return"></h1>
+
+						<h1 class="location_of_return"></h1>
+
+					</div>
+
+					<!-- display special message return of shuttlecock -->
+					<div class="row return_shuttlecock" width="300">
+							<div class="col-sm-3" id="timer">
+								<h3><label id="minutes">00</label>:<label id="seconds">00</label></h3>
+							</div>
+							<div class="col-sm-9 special_message hidden">
+								<h2 style="color:red;text-align:left">&nbsp; &nbsp;准备杀球</h2>
+							</div>
+							
+							
+
+					</div>					
+
+					
+
+					<div class="row badminton_court">
+						<img src="/image/foot.png" width="50" height="50" id="foot" class="img-fluid img-thumbnail hidden" alt="Responsive image">
+						<canvas id="badminton" style="border:2px solid #000000; width: 100%;text-align:center;" height="300" ></canvas>
+
+
+					</div>
+
+					<div class="row buttons">
+						<div class="col-sm-8" >
+							<button type="button" class="start btn btn-primary" onclick="start_footwork()">开始</button>
+						</div>
+						<div class="col-sm-4">
+							<button class="start_over btn btn-success" onclick="start_over()">重新开始</button>
+						</div>
+					</div>
+	
+
+				
+				</div>
+				<div class="margin_right col-3 col-sm-3 col-md-3"></div>
+			</div>
+		</div>
+
+
+
+		<script type="text/javascript" src="/js/jquery2.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+		<script src="/js/docs.min.js"></script>
+
+    <script>
+		window.onload = function() {
+			var canvas = document.getElementById("badminton");
+			var ctx = canvas.getContext("2d");
+			canvas_redraw(canvas,ctx);
+		};
+
+
+    </script>
+
+	<script>
+	    function start_footwork(){
+			$("#timer").show();
+			var totalSeconds = 0;
+			var secondsLabel = document.getElementById("seconds");
+			var minutesLabel = document.getElementById("minutes");
+			function setTime() {		  	
+			  ++totalSeconds;
+			  secondsLabel.innerHTML = pad(totalSeconds % 60);
+			  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+			}
+
+			function pad(val) {
+			  var valString = val + "";
+			  if (valString.length < 2) {
+			    return "0" + valString;
+			  } else {
+			    return valString;
+			  }
+			}			
+			setInterval(setTime, 1000);
+
+
+	        var position = {};
+	        var position_types = ['r1','r2','r3'];
+	        position['r1'] = [0.4,0.5,0.1];
+	        position['r2'] = [0.1,0.3,0.6];
+	        position['r3'] = [0.6,0.1,0.2];
+	        var play = {};
+	        play['r1'] = [0.4,0.5,0.1];
+	        play['r2'] = [0.1,0.3,0.6];
+	        play['r3'] = [0.6,0.1,0.2];
+	        var play_types = ['nd','cd','sd'];
+	        var count = 0;
+	        var current_pos = "r1";
+	        var canvas = document.getElementById("badminton");
+	        var ctx = canvas.getContext("2d");
+	        var img=document.getElementById("foot");
+	        while (count < 10){
+
+	        	// draw the foot according to position
+		    	
+		    	
+		    		        	
+	        	switch(current_pos){
+	        		case "r1":
+				    	ctx.translate(10, 10);
+				    	ctx.rotate(-0.9);
+				    	ctx.drawImage(img,-30,15);
+				    	ctx.rotate(0.9);
+				    	ctx.translate(-10, -10);
+				    	break;
+	        		case "r2":
+				    	ctx.translate(-20, 180);
+				    	ctx.rotate(-1.5);
+				    	ctx.drawImage(img,20,20);
+				    	ctx.rotate(1.5);
+				    	ctx.translate(20, -180);
+				    	break;
+	        		case "r3":
+				    	ctx.translate(20, 320);
+				    	ctx.rotate(-2.2);
+				    	ctx.drawImage(img,20,20);
+				    	ctx.rotate(2.2);
+				    	ctx.translate(-20, -320);
+				    	break;
+
+	        	}
+
+	        	sleep(2000);
+
+	        	// clear canvas
+	        	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	        	ctx.restore();
+	        	// redraw canvas
+	        	canvas_redraw(canvas,ctx);
+
+	        	// determine current position
+	        	current_pos = getRandomItem(position_types, position[current_pos]);
+	        	alert(current_pos);
+
+	        }
+
+	        // function pattern(){
+
+	        // }
+	        // setInterval(pattern, 2000);
+
+	    }
+
+	    function canvas_redraw(canvas,ctx){
+			// var canvas = document.getElementById("badminton");
+			// var ctx = canvas.getContext("2d");
+			ctx.strokeStyle="#000000";
+			ctx.moveTo(0,88.75);
+			ctx.lineTo(485,88.75);
+			ctx.moveTo(0,266);
+			ctx.lineTo(485,266);
+			ctx.moveTo(150,0);
+			ctx.lineTo(150,300);	
+			ctx.moveTo(22.6,0);
+			ctx.lineTo(22.6,300);
+			ctx.moveTo(277.4,0);
+			ctx.lineTo(277.4,300);
+			// ctx.beginPath();
+			// ctx.arc(150,150,5,0,2*Math.PI);		
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(150,150,5,0,2*Math.PI);		
+			// ctx.stroke();
+			ctx.fillStyle = "grey";
+			ctx.fill();
+			// var img=document.getElementById("foot");	
+			// 		    	ctx.translate(20, 320);
+			// 		    	ctx.rotate(-2.2);
+			// 		    	ctx.drawImage(img,20,20);
+			// 		    	ctx.rotate(2.2);	    	
+	    }
+
+	    function start_over(){
+	    	clearInterval(setInterval(setTime, 1000));
+	    	// $("#timer").hide();
+
+	    }
+
+		var rand = function(min, max) {
+			return Math.random() * (max - min) + min;
+		};
+
+		var getRandomItem = function(list, weight) {
+			var total_weight = weight.reduce(function (prev, cur, i, arr) {
+				return prev + cur;
+			});
+			
+			var random_num = rand(0, total_weight);
+			var weight_sum = 0;
+			//console.log(random_num)
+			
+			for (var i = 0; i < list.length; i++) {
+				weight_sum += weight[i];
+				weight_sum = +weight_sum.toFixed(2);
+				
+				if (random_num <= weight_sum) {
+					return list[i];
+				}
+			}
+			
+			// end of function
+		};
+
+		function sleep(milliseconds) {
+		  var start = new Date().getTime();
+		  for (var i = 0; i < 1e7; i++) {
+		    if ((new Date().getTime() - start) > milliseconds){
+		      break;
+		    }
+		  }
+		}		
+
+		// function draw_pos(x,y)
+	  
+
+	</script>
+
+
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
